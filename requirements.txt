@@ -1,0 +1,4 @@
+roboflow
+opencv-python-headless
+streamlit
+pillow

@@ -1,30 +1,41 @@
 import streamlit as st
 from roboflow import Roboflow
 from PIL import Image
+import os
 
 st.title("Bus EDS Monitor")
 
-# Initialize Roboflow with your API key
+# Initialize Roboflow (Use your NEW, secure API key)
 rf = Roboflow(api_key="x0iljMh1cc1LteBJrWfr") 
 project = rf.workspace("syazwis-workspace").project("eds-2")
 model = project.version(4).model
 
-# File uploader for mobile/desktop users
-uploaded_file = st.file_uploader("Upload Bus Image", type=["jpg", "jpeg", "png"])
+# Add Camera input option
+source = st.radio("Select Source:", ("Upload Image", "Use Camera"))
+
+if source == "Use Camera":
+    uploaded_file = st.camera_input("Take a photo of the EDS")
+else:
+    uploaded_file = st.file_uploader("Upload Bus Image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # Open and display the image
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Bus Display', use_container_width=True)
-    
-    # Run Inference
-    # The model expects an image path, we save the uploaded file temporarily
-    with open("temp.jpg", "wb") as f:
+    # Save uploaded file locally temporarily
+    temp_path = "temp.jpg"
+    with open(temp_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
         
-    prediction = model.predict("temp.jpg")
+    # Run Inference
+    prediction = model.predict(temp_path)
     annotated_image = prediction.plot()
     
-    # Show the result with bounding boxes
-    st.image(annotated_image, caption='Result', use_container_width=True)
+    # Save the annotated image to show the user
+    annotated_image.save("result.jpg")
+    
+    # Display results
+    st.image("result.jpg", caption='Result', use_container_width=True)
+    
+    # Add Download Button for the result
+    with open("result.jpg", "rb") as file:
+        st.download_button(label="Save Result", data=file, file_name="eds_result.jpg", mime="image/jpeg")
+
     st.write("Detection results displayed above.")

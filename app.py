@@ -24,18 +24,25 @@ if uploaded_file is not None:
     with open(temp_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
         
-    # Run Inference
+  # Run Inference
     prediction = model.predict(temp_path)
-    annotated_image = prediction.plot()
     
-    # Save the annotated image to show the user
-    annotated_image.save("result.jpg")
-    
-    # Display results
-    st.image("result.jpg", caption='Result', use_container_width=True)
-    
-    # Add Download Button for the result
-    with open("result.jpg", "rb") as file:
-        st.download_button(label="Save Result", data=file, file_name="eds_result.jpg", mime="image/jpeg")
-
-    st.write("Detection results displayed above.")
+    # Check if we have detections to avoid errors
+    if prediction:
+        # Save the annotated image directly
+        # Some versions of roboflow save the plot as an image object
+        annotated_image = prediction.plot()
+        
+        # Save directly using the built-in method
+        # If .save() is not available on the returned object, 
+        # we can save the prediction visualization directly
+        prediction.save("result.jpg") 
+        
+        # Display results
+        st.image("result.jpg", caption='Result', use_container_width=True)
+        
+        # Add Download Button for the result
+        with open("result.jpg", "rb") as file:
+            st.download_button(label="Save Result", data=file, file_name="eds_result.jpg", mime="image/jpeg")
+    else:
+        st.write("No EDS detected in this image.")

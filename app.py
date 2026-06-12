@@ -3,6 +3,12 @@ from roboflow import Roboflow
 from PIL import Image
 import os
 
+st.markdown("""
+    <div style="background-color:#004a99; padding:15px; border-radius:10px; text-align:center; margin-bottom: 20px;">
+        <h1 style="color:white; font-family:sans-serif; margin:0;">SBST EDS Inspection System</h1>
+    </div>
+""", unsafe_allow_html=True)
+
 st.title("Bus EDS Monitor")
 
 # Initialize Roboflow

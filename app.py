@@ -3,10 +3,14 @@ from roboflow import Roboflow
 from PIL import Image
 import os
 
+# --- UPDATED: CUSTOM BRANDING BANNER ---
 st.markdown("""
-    <div style="background-color:#004a99; padding:20px; border-radius:10px; text-align:center; margin-bottom: 20px; border: 2px solid white;">
-        <h1 style="color:white; font-family:sans-serif; font-weight:bold; margin:0; letter-spacing: 1px;">SBS TRANSIT</h1>
-        <p style="color:white; font-size:16px; margin:0; font-style:italic;">EDS INSPECTION SYSTEM</p>
+    <div style="background-color:white; padding:20px; border-radius:10px; text-align:center; margin-bottom: 20px; border: 2px solid #004a99;">
+        <h1 style="font-family:sans-serif; font-weight:bold; margin:0; letter-spacing: 1px;">
+            <span style="color:orange;">SBS</span> 
+            <span style="color:purple;">TRANSIT</span>
+        </h1>
+        <p style="color:#333; font-size:16px; margin:0; font-style:italic;">EDS INSPECTION SYSTEM</p>
     </div>
 """, unsafe_allow_html=True)
 

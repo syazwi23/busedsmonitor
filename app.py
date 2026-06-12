@@ -6,7 +6,7 @@ import os
 st.title("Bus EDS Monitor")
 
 # Initialize Roboflow
-rf = Roboflow(api_key="YOUR_NEW_API_KEY") 
+rf = Roboflow(api_key="x0iljMh1cc1LteBJrWfr") 
 project = rf.workspace("syazwis-workspace").project("eds-2")
 model = project.version(5).model # Ensure this is your latest version
 
